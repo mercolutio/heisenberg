@@ -562,45 +562,127 @@
             <div class="trust-badge">✅ Antwort innerhalb 24h</div>
           </div>
         </div>
-        <form class="kontakt-form" id="kontakt-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Ihr Name *</label>
-              <input type="text" id="name" name="name" placeholder="Max Mustermann" required />
+        <form class="kontakt-form multistep-form" id="kontakt-form" novalidate>
+
+          <!-- Progress indicator -->
+          <div class="form-progress">
+            <div class="form-progress-step active" data-step="1">
+              <div class="step-num">1</div>
+              <span>Service</span>
             </div>
-            <div class="form-group">
-              <label for="email">E-Mail *</label>
-              <input type="email" id="email" name="email" placeholder="max@beispiel.de" required />
+            <div class="form-progress-line"></div>
+            <div class="form-progress-step" data-step="2">
+              <div class="step-num">2</div>
+              <span>Ihr Projekt</span>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="city">Stadt / PLZ</label>
-              <input type="text" id="city" name="city" placeholder="Bremen" />
-            </div>
-            <div class="form-group">
-              <label for="service">Service wählen</label>
-              <select id="service" name="service">
-                <option value="">Bitte wählen…</option>
-                <option value="photovoltaik">Photovoltaikanlage</option>
-                <option value="waermepumpe">Wärmepumpe</option>
-                <option value="speicher">Batteriespeicher</option>
-                <option value="echeck">E-Check</option>
-                <option value="smartmeter">Smart Meter</option>
-                <option value="anmeldung">Anlagemeldung</option>
-              </select>
+            <div class="form-progress-line"></div>
+            <div class="form-progress-step" data-step="3">
+              <div class="step-num">3</div>
+              <span>Kontakt</span>
             </div>
           </div>
-          <div class="form-group">
-            <label for="message">Ihre Nachricht</label>
-            <textarea id="message" name="message" rows="4" placeholder="Beschreiben Sie kurz Ihr Vorhaben…"></textarea>
+
+          <!-- Step 1: Service -->
+          <div class="form-step active" id="step-1">
+            <h3 class="step-title">Welchen Service benötigen Sie?</h3>
+            <p class="step-desc">Wählen Sie eine oder mehrere Leistungen aus</p>
+            <div class="service-select-grid">
+              <label class="service-option">
+                <input type="checkbox" name="services" value="photovoltaik" />
+                <div class="service-option-inner"><span class="service-option-icon">☀️</span><span>Photovoltaik</span></div>
+              </label>
+              <label class="service-option">
+                <input type="checkbox" name="services" value="waermepumpe" />
+                <div class="service-option-inner"><span class="service-option-icon">♨️</span><span>Wärmepumpe</span></div>
+              </label>
+              <label class="service-option">
+                <input type="checkbox" name="services" value="speicher" />
+                <div class="service-option-inner"><span class="service-option-icon">🔋</span><span>Batteriespeicher</span></div>
+              </label>
+              <label class="service-option">
+                <input type="checkbox" name="services" value="echeck" />
+                <div class="service-option-inner"><span class="service-option-icon">🔍</span><span>E-Check</span></div>
+              </label>
+              <label class="service-option">
+                <input type="checkbox" name="services" value="smartmeter" />
+                <div class="service-option-inner"><span class="service-option-icon">📊</span><span>Smart Meter</span></div>
+              </label>
+              <label class="service-option">
+                <input type="checkbox" name="services" value="anmeldung" />
+                <div class="service-option-inner"><span class="service-option-icon">📋</span><span>Anlagemeldung</span></div>
+              </label>
+            </div>
+            <div class="step-error" id="step1-error">Bitte wählen Sie mindestens einen Service aus.</div>
+            <div class="form-nav">
+              <div></div>
+              <button type="button" class="btn btn-primary btn-lg" id="next-1">Weiter →</button>
+            </div>
           </div>
-          <div class="form-privacy">
-            <input type="checkbox" id="privacy" name="privacy" required />
-            <label for="privacy">Ich stimme der <a href="#">Datenschutzerklärung</a> zu und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert werden. *</label>
+
+          <!-- Step 2: Projekt -->
+          <div class="form-step" id="step-2">
+            <h3 class="step-title">Erzählen Sie uns von Ihrem Projekt</h3>
+            <p class="step-desc">Alle Angaben sind optional – helfen uns aber bei der Vorbereitung</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Stadt / PLZ</label>
+                <input type="text" name="city" placeholder="z. B. 31228 Peine" />
+              </div>
+              <div class="form-group">
+                <label>Gebäudetyp</label>
+                <select name="building">
+                  <option value="">Bitte wählen…</option>
+                  <option value="efh">Einfamilienhaus</option>
+                  <option value="mfh">Mehrfamilienhaus</option>
+                  <option value="gewerbe">Gewerbeobjekt</option>
+                  <option value="other">Sonstiges</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Ihre Nachricht <span class="label-optional">(optional)</span></label>
+              <textarea name="message" rows="4" placeholder="Beschreiben Sie kurz Ihr Vorhaben…"></textarea>
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn btn-outline btn-lg" id="back-2">← Zurück</button>
+              <button type="button" class="btn btn-primary btn-lg" id="next-2">Weiter →</button>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-full">Kostenlos anfragen →</button>
-          <div class="form-success" id="form-success">Vielen Dank! Wir melden uns innerhalb von 24 Stunden bei Ihnen.</div>
+
+          <!-- Step 3: Kontakt -->
+          <div class="form-step" id="step-3">
+            <h3 class="step-title">Ihre Kontaktdaten</h3>
+            <p class="step-desc">Wir melden uns innerhalb von 24 Stunden bei Ihnen</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Ihr Name *</label>
+                <input type="text" id="name" name="name" placeholder="Max Mustermann" required />
+              </div>
+              <div class="form-group">
+                <label for="email">E-Mail *</label>
+                <input type="email" id="email" name="email" placeholder="max@beispiel.de" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Telefon <span class="label-optional">(optional)</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="0171 1234567" />
+            </div>
+            <div class="form-privacy">
+              <input type="checkbox" id="privacy" name="privacy" required />
+              <label for="privacy">Ich stimme der <a href="#">Datenschutzerklärung</a> zu und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage gespeichert werden. *</label>
+            </div>
+            <div class="step-error" id="step3-error">Bitte füllen Sie alle Pflichtfelder aus.</div>
+            <div class="form-nav">
+              <button type="button" class="btn btn-outline btn-lg" id="back-3">← Zurück</button>
+              <button type="submit" class="btn btn-primary btn-lg">Kostenlos anfragen →</button>
+            </div>
+          </div>
+
+          <div class="form-success" id="form-success">
+            <div class="form-success-icon">✅</div>
+            <strong>Vielen Dank für Ihre Anfrage!</strong>
+            <span>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</span>
+          </div>
         </form>
       </div>
     </div>

@@ -40,35 +40,76 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Contact form
+// Multi-step contact form
 const form = document.getElementById('kontakt-form');
 const formSuccess = document.getElementById('form-success');
 
+let currentStep = 1;
+
+function goToStep(next) {
+  const prevEl = document.getElementById('step-' + currentStep);
+  const nextEl = document.getElementById('step-' + next);
+  const progressSteps = form.querySelectorAll('.form-progress-step');
+  const progressLines = form.querySelectorAll('.form-progress-line');
+
+  prevEl.classList.remove('active');
+  nextEl.classList.add('active');
+  currentStep = next;
+
+  progressSteps.forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < currentStep) s.classList.add('done');
+    if (i + 1 === currentStep) s.classList.add('active');
+  });
+  progressLines.forEach((l, i) => {
+    l.classList.toggle('done', i + 1 < currentStep);
+  });
+
+  form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Step 1 → 2
+document.getElementById('next-1').addEventListener('click', () => {
+  const checked = form.querySelectorAll('input[name="services"]:checked');
+  const err = document.getElementById('step1-error');
+  if (checked.length === 0) { err.classList.add('visible'); return; }
+  err.classList.remove('visible');
+  goToStep(2);
+});
+
+// Step 2 → 1
+document.getElementById('back-2').addEventListener('click', () => goToStep(1));
+
+// Step 2 → 3
+document.getElementById('next-2').addEventListener('click', () => goToStep(3));
+
+// Step 3 → 2
+document.getElementById('back-3').addEventListener('click', () => goToStep(2));
+
+// Submit
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const name = form.querySelector('#name').value.trim();
   const email = form.querySelector('#email').value.trim();
   const privacy = form.querySelector('#privacy').checked;
+  const err = document.getElementById('step3-error');
 
   if (!name || !email || !privacy) {
-    if (!privacy) {
-      form.querySelector('#privacy').focus();
-    }
+    err.classList.add('visible');
     return;
   }
+  err.classList.remove('visible');
 
-  // Simulate submission
   const btn = form.querySelector('[type="submit"]');
   btn.textContent = 'Wird gesendet…';
   btn.disabled = true;
 
   setTimeout(() => {
+    document.getElementById('step-3').classList.remove('active');
+    form.querySelector('.form-progress').style.display = 'none';
     formSuccess.classList.add('visible');
     form.reset();
-    btn.textContent = 'Kostenlos anfragen →';
-    btn.disabled = false;
-    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 900);
 });
 
