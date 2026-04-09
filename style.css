@@ -1,3 +1,28 @@
+/* ===== SVG ICONS ===== */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.logo-icon .icon            { width: 20px; height: 20px; }
+.hero-img-badge-icon .icon  { width: 28px; height: 28px; }
+.hero-img-tag .icon         { width: 14px; height: 14px; }
+.why-icon .icon             { width: 30px; height: 30px; }
+.process-icon .icon         { width: 36px; height: 36px; }
+.feature-icon-box .icon     { width: 22px; height: 22px; }
+.service-icon-lg .icon      { width: 40px; height: 40px; }
+.service-icon-sm .icon      { width: 26px; height: 26px; }
+.icon.service-option-icon   { width: 28px; height: 28px; }
+.kontakt-icon .icon         { width: 22px; height: 22px; }
+.trust-badge .icon          { width: 15px; height: 15px; }
+.form-success-icon .icon    { width: 48px; height: 48px; stroke-width: 1.5; color: #22c55e; }
+
 /* ===== RESET & BASE ===== */
 *, *::before, *::after {
   box-sizing: border-box;
