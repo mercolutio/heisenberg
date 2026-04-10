@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVU-Netzanmeldung für PV-Anlagen – Heisenberg Energiesysteme</title>
+  <meta name="description" content="Wir übernehmen die komplette EVU-Netzanmeldung Ihrer Photovoltaikanlage – schnell, zuverlässig und ohne bürokratischen Aufwand für Sie." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --orange:       #f97316;
+      --orange-dark:  #ea6c10;
+      --orange-light: #fff7ed;
+      --orange-mid:   #fed7aa;
+      --navy:         #1a2332;
+      --navy-mid:     #243048;
+      --gray:         #64748b;
+      --gray-light:   #f8fafc;
+      --gray-mid:     #e2e8f0;
+      --radius:       12px;
+      --radius-lg:    20px;
+      --shadow:       0 4px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-lg:    0 8px 40px rgba(0,0,0,0.14), 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--navy);
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== ICONS ===== */
+    .icon {
+      display: inline-block;
+      flex-shrink: 0;
+      vertical-align: middle;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(249,115,22,0.35); }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--gray-mid);
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-white {
+      background: #fff;
+      color: var(--navy);
+    }
+    .btn-white:hover { background: var(--orange-light); color: var(--orange); }
+    .btn-lg { padding: 16px 36px; font-size: 16px; border-radius: 14px; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-mid);
+      transition: box-shadow 0.3s;
+    }
+    .header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.10); }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+    }
+    .logo-icon .icon { width: 20px; height: 20px; }
+    .logo-text {
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+      color: var(--navy);
+    }
+    .logo-sub {
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--gray);
+      display: block;
+      line-height: 1;
+    }
+    .header-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-phone {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-phone .icon { width: 16px; height: 16px; color: var(--orange); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--navy);
+      padding: 96px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--orange);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-badge .icon { width: 14px; height: 14px; }
+    .hero-title {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .hero-title span { color: var(--orange); }
+    .hero-subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 36px;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .hero-trust {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+    }
+    .hero-trust-item .icon { width: 16px; height: 16px; color: var(--orange); }
+
+    /* Hero card / form side */
+    .hero-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .hero-card-sub {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+    .hero-form-group {
+      margin-bottom: 16px;
+    }
+    .hero-form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .hero-form-group input,
+    .hero-form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--navy);
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .hero-form-group input:focus,
+    .hero-form-group select:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+    .hero-card .btn { width: 100%; justify-content: center; margin-top: 8px; }
+    .hero-card-note {
+      font-size: 12px;
+      color: var(--gray);
+      text-align: center;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .hero-card-note .icon { width: 13px; height: 13px; }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 64px 0 56px; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; }
+      .header-phone { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SVG ICON SPRITE -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="icon-lightning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+  </symbol>
+  <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.88 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.81 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+  </symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+  <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+  <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </symbol>
+  <symbol id="icon-headset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </symbol>
+  <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+  </symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+  </symbol>
+  <symbol id="icon-sofa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5H6V11a2 2 0 0 0-4 0z"/><line x1="6" y1="18" x2="6" y2="22"/><line x1="18" y1="18" x2="18" y2="22"/>
+  </symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+  </symbol>
+  <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+  </symbol>
+  <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+  </symbol>
+  <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="6 9 12 15 18 9"/>
+  </symbol>
+  <symbol id="icon-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 2v5c0 1.25.75 2 2 2h3c0 3-2 5-6 5v2z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 2v5c0 1.25.75 2 2 2h3c0 3-2 5-6 5v2z"/>
+  </symbol>
+</svg>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container">
+    <div class="nav">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">
+          <svg class="icon" aria-hidden="true"><use href="#icon-lightning"></use></svg>
+        </span>
+        <span class="logo-text">HEISENBERG<span class="logo-sub">Energiesysteme</span></span>
+      </a>
+      <div class="header-cta">
+        <a href="tel:+4951715059580" class="header-phone">
+          <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+          05171 5059580
+        </a>
+        <a href="#kontakt" class="btn btn-primary">Jetzt anfragen</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg class="icon" aria-hidden="true"><use href="#icon-sun"></use></svg>
+          Spezialisierter Netzanmeldungsservice
+        </div>
+        <h1 class="hero-title">
+          EVU-Anmeldung Ihrer<br><span>Photovoltaikanlage</span><br>– wir übernehmen alles
+        </h1>
+        <p class="hero-subtitle">
+          Die Anmeldung beim Energieversorgungsunternehmen ist bürokratisch und zeitaufwändig. Wir erledigen das vollständig für Sie – damit Ihre PV-Anlage schnell ans Netz geht.
+        </p>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn btn-primary btn-lg">
+            Jetzt kostenlos anfragen
+            <svg class="icon" style="width:18px;height:18px" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+          <a href="tel:+4951715059580" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.3)">
+            <svg class="icon" style="width:18px;height:18px" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            05171 5059580
+          </a>
+        </div>
+        <div class="hero-trust">
+          <span class="hero-trust-item">
+            <svg class="icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+            Schnelle Bearbeitung
+          </span>
+          <span class="hero-trust-item">
+            <svg class="icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+            Keine versteckten Kosten
+          </span>
+          <span class="hero-trust-item">
+            <svg class="icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+            7 Jahre Erfahrung
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-title">Jetzt EVU-Anmeldung starten</div>
+        <div class="hero-card-sub">Unverbindliche Anfrage – kostenlos & schnell</div>
+        <form id="hero-form">
+          <div class="hero-form-group">
+            <label for="hf-name">Ihr Name</label>
+            <input type="text" id="hf-name" placeholder="Max Mustermann" />
+          </div>
+          <div class="hero-form-group">
+            <label for="hf-email">E-Mail-Adresse</label>
+            <input type="email" id="hf-email" placeholder="max@beispiel.de" />
+          </div>
+          <div class="hero-form-group">
+            <label for="hf-phone">Telefonnummer</label>
+            <input type="tel" id="hf-phone" placeholder="+49 ..." />
+          </div>
+          <div class="hero-form-group">
+            <label for="hf-kwp">Anlagengröße (kWp)</label>
+            <select id="hf-kwp">
+              <option value="">Bitte wählen…</option>
+              <option>bis 10 kWp</option>
+              <option>10–30 kWp</option>
+              <option>30–100 kWp</option>
+              <option>über 100 kWp</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">
+            Anfrage absenden
+            <svg class="icon" style="width:18px;height:18px" aria-hidden="true"><use href="#icon-send"></use></svg>
+          </button>
+        </form>
+        <p class="hero-card-note">
+          <svg class="icon" aria-hidden="true"><use href="#icon-shield"></use></svg>
+          Ihre Daten werden vertraulich behandelt
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits-section" id="vorteile">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Ihre Vorteile</div>
+      <h2 class="section-title">Warum Heisenberg für die EVU-Anmeldung?</h2>
+      <p class="section-subtitle">Wir kennen jeden Schritt des Anmeldeprozesses – und ersparen Ihnen den bürokratischen Aufwand komplett.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg class="icon" style="width:32px;height:32px" aria-hidden="true"><use href="#icon-clock"></use></svg>
+        </div>
+        <h3>Zeitersparnis</h3>
+        <p>Die EVU-Anmeldung kostet ohne Erfahrung Tage. Wir erledigen alles in kürzester Zeit – Sie müssen sich um nichts kümmern.</p>
+        <ul class="benefit-list">
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Schnelle Bearbeitung</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Vollständige Dokumentation</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Keine Wartezeiten durch fehlende Unterlagen</li>
+        </ul>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg class="icon" style="width:32px;height:32px" aria-hidden="true"><use href="#icon-shield"></use></svg>
+        </div>
+        <h3>Fachkompetenz</h3>
+        <p>Als zertifizierter Fachbetrieb kennen wir alle Anforderungen der Netzbetreiber – regional und überregional.</p>
+        <ul class="benefit-list">
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Zertifizierter Fachbetrieb</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Aktuelle Normen & Vorschriften</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Fehlerfreie Antragsstellung</li>
+        </ul>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg class="icon" style="width:32px;height:32px" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+        </div>
+        <h3>Zuverlässigkeit</h3>
+        <p>Wir begleiten Sie von der Antragstellung bis zur finalen Netzfreigabe und halten Sie jederzeit auf dem Laufenden.</p>
+        <ul class="benefit-list">
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Transparenter Prozess</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Statusupdates per E-Mail</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Nachverfolgung bis zur Genehmigung</li>
+        </ul>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg class="icon" style="width:32px;height:32px" aria-hidden="true"><use href="#icon-headset"></use></svg>
+        </div>
+        <h3>Persönlicher Support</h3>
+        <p>Ein fester Ansprechpartner steht Ihnen während des gesamten Prozesses zur Verfügung – per Telefon oder E-Mail.</p>
+        <ul class="benefit-list">
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Direkter Ansprechpartner</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Kurze Reaktionszeiten</li>
+          <li><svg class="icon" style="width:15px;height:15px;color:var(--orange)" aria-hidden="true"><use href="#icon-check"></use></svg> Auch nach Abschluss erreichbar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="ablauf">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">So läuft es ab</div>
+      <h2 class="section-title">In 4 Schritten zur Netzgenehmigung</h2>
+      <p class="section-subtitle">Unser strukturierter Prozess sorgt dafür, dass Ihre Anlage so schnell wie möglich ans Netz geht.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-item">
+        <div class="process-number">01</div>
+        <div class="process-icon-box">
+          <svg class="icon" style="width:28px;height:28px" aria-hidden="true"><use href="#icon-file-text"></use></svg>
+        </div>
+        <h3>Registrierung & Anfrage</h3>
+        <p>Sie füllen unser kurzes Formular aus oder rufen uns an. Wir besprechen Ihre Anlage und klären alle Details.</p>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-item">
+        <div class="process-number">02</div>
+        <div class="process-icon-box">
+          <svg class="icon" style="width:28px;height:28px" aria-hidden="true"><use href="#icon-users"></use></svg>
+        </div>
+        <h3>Kontaktaufnahme</h3>
+        <p>Wir nehmen Kontakt mit Ihrem zuständigen Netzbetreiber (EVU) auf und bereiten den Antrag vollständig vor.</p>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-item">
+        <div class="process-number">03</div>
+        <div class="process-icon-box">
+          <svg class="icon" style="width:28px;height:28px" aria-hidden="true"><use href="#icon-send"></use></svg>
+        </div>
+        <h3>Dokumente einreichen</h3>
+        <p>Wir reichen alle erforderlichen Unterlagen beim Netzbetreiber ein und verfolgen den Antragsstatus aktiv nach.</p>
+      </div>
+      <div class="process-connector"></div>
+      <div class="process-item">
+        <div class="process-number">04</div>
+        <div class="process-icon-box">
+          <svg class="icon" style="width:28px;height:28px" aria-hidden="true"><use href="#icon-sofa"></use></svg>
+        </div>
+        <h3>Zurücklehnen</h3>
+        <p>Sie erhalten die Genehmigung und Ihre Anlage kann in Betrieb gehen. Wir informieren Sie über jeden Fortschritt.</p>
+      </div>
+    </div>
+    <div class="process-cta">
+      <a href="#kontakt" class="btn btn-primary btn-lg">
+        Jetzt starten
+        <svg class="icon" style="width:18px;height:18px" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="bewertungen">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Kundenstimmen</div>
+      <h2 class="section-title">Was unsere Kunden sagen</h2>
+      <p class="section-subtitle">Über 800 zufriedene Kunden vertrauen auf Heisenberg Energiesysteme – auch bei der EVU-Anmeldung.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+        </div>
+        <div class="testimonial-quote">
+          <svg class="icon quote-icon" aria-hidden="true"><use href="#icon-quote"></use></svg>
+        </div>
+        <p>„Die Anmeldung beim Netzbetreiber war für mich ein Buch mit sieben Siegeln. Heisenberg hat alles übernommen und mich wöchentlich über den Stand informiert. Absolute Empfehlung!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MK</div>
+          <div>
+            <div class="testimonial-name">Markus K.</div>
+            <div class="testimonial-role">PV-Anlage 12 kWp, Hannover</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+        </div>
+        <div class="testimonial-quote">
+          <svg class="icon quote-icon" aria-hidden="true"><use href="#icon-quote"></use></svg>
+        </div>
+        <p>„Als Handwerksbetrieb haben wir mehrere Anlagen laufen. Die Netzanmeldung kostet enorm viel Zeit. Seit wir Heisenberg nutzen, läuft das reibungslos und schnell."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SB</div>
+          <div>
+            <div class="testimonial-name">Sandra B.</div>
+            <div class="testimonial-role">Gewerbliche Anlage 48 kWp, Peine</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+        </div>
+        <div class="testimonial-quote">
+          <svg class="icon quote-icon" aria-hidden="true"><use href="#icon-quote"></use></svg>
+        </div>
+        <p>„Ich hatte meinen Installateur, aber niemanden für den Papierkram beim EVU. Heisenberg hat diese Lücke perfekt gefüllt. Genehmigung in unter 3 Wochen!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TW</div>
+          <div>
+            <div class="testimonial-name">Thomas W.</div>
+            <div class="testimonial-role">PV-Anlage 8,5 kWp, Hildesheim</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <svg class="icon" style="width:16px;height:16px;fill:var(--orange);stroke:none" aria-hidden="true"><use href="#icon-star"></use></svg>
+        </div>
+        <div class="testimonial-quote">
+          <svg class="icon quote-icon" aria-hidden="true"><use href="#icon-quote"></use></svg>
+        </div>
+        <p>„Kompetentes Team, schnelle Kommunikation und ein fairer Preis. Meine Anlage ist jetzt angemeldet und einspeisevergütungsfähig. Danke!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">LM</div>
+          <div>
+            <div class="testimonial-name">Laura M.</div>
+            <div class="testimonial-role">PV-Anlage 15 kWp, Braunschweig</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonials-summary">
+      <div class="ts-item">
+        <span class="ts-num">4,9</span>
+        <span class="ts-label">von 5 Sternen</span>
+      </div>
+      <div class="ts-divider"></div>
+      <div class="ts-item">
+        <span class="ts-num">200+</span>
+        <span class="ts-label">EVU-Anmeldungen</span>
+      </div>
+      <div class="ts-divider"></div>
+      <div class="ts-item">
+        <span class="ts-num">&lt;3 Wo.</span>
+        <span class="ts-label">Ø Bearbeitungszeit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Häufige Fragen zur EVU-Anmeldung</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>
+          Was ist eine EVU-Anmeldung?
+          <svg class="icon faq-arrow" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+        </summary>
+        <p>EVU steht für Energieversorgungsunternehmen – also den Netzbetreiber in Ihrer Region. Bevor eine PV-Anlage Strom ins Netz einspeisen darf, muss sie dort angemeldet und genehmigt werden. Dieser Prozess umfasst mehrere technische Dokumente und kann ohne Erfahrung mehrere Wochen dauern.</p>
+      </details>
+      <details class="faq-item">
+        <summary>
+          Welche Unterlagen werden benötigt?
+          <svg class="icon faq-arrow" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+        </summary>
+        <p>In der Regel benötigen wir: Datenblätter der Wechselrichter und Module, einen Lageplan des Gebäudes, den Netzanschlussschein sowie Ihren Energieliefervertrag. Wir teilen Ihnen nach der Anfrage genau mit, was wir von Ihnen brauchen – und sammeln den Rest selbst.</p>
+      </details>
+      <details class="faq-item">
+        <summary>
+          Wie lange dauert die Anmeldung?
+          <svg class="icon faq-arrow" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+        </summary>
+        <p>Das hängt vom zuständigen Netzbetreiber ab. In der Regel dauert es zwischen 2 und 6 Wochen. Durch unsere vollständigen Antragsunterlagen und direkten Kontakt zum EVU können wir die Bearbeitungszeit in den meisten Fällen deutlich verkürzen.</p>
+      </details>
+      <details class="faq-item">
+        <summary>
+          Funktioniert das auch für bereits installierte Anlagen?
+          <svg class="icon faq-arrow" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+        </summary>
+        <p>Ja – wir übernehmen sowohl die Erstanmeldung neuer Anlagen als auch die Nachmeldung oder Korrektur bestehender Einträge. Sprechen Sie uns einfach an, wir klären den genauen Handlungsbedarf.</p>
+      </details>
+      <details class="faq-item">
+        <summary>
+          Was kostet der Service?
+          <svg class="icon faq-arrow" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+        </summary>
+        <p>Wir erstellen nach Ihrer Anfrage ein transparentes, individuelles Angebot – abhängig von Anlagengröße und Netzbetreiber. Die Erstanfrage und Beratung sind grundsätzlich kostenlos.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="kontakt">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-label" style="display:inline-block;margin-bottom:16px">Kontakt</div>
+        <h2 class="section-title" style="text-align:left;margin-bottom:16px">Jetzt EVU-Anmeldung beauftragen</h2>
+        <p style="color:var(--gray);font-size:16px;margin-bottom:36px;line-height:1.7">Füllen Sie das Formular aus oder rufen Sie uns direkt an – wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+        <div class="contact-details">
+          <a href="tel:+4905171505958" class="contact-detail-item">
+            <div class="contact-detail-icon">
+              <svg class="icon" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </div>
+            <div>
+              <div class="contact-detail-label">Telefon</div>
+              <div class="contact-detail-val">05171 5059580</div>
+            </div>
+          </a>
+          <a href="tel:+491711140030" class="contact-detail-item">
+            <div class="contact-detail-icon">
+              <svg class="icon" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </div>
+            <div>
+              <div class="contact-detail-label">Mobil</div>
+              <div class="contact-detail-val">0171 1140030</div>
+            </div>
+          </a>
+          <a href="mailto:info@heisenberg-energiesysteme.de" class="contact-detail-item">
+            <div class="contact-detail-icon">
+              <svg class="icon" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-mail"></use></svg>
+            </div>
+            <div>
+              <div class="contact-detail-label">E-Mail</div>
+              <div class="contact-detail-val">info@heisenberg-energiesysteme.de</div>
+            </div>
+          </a>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">
+              <svg class="icon" style="width:20px;height:20px" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+            </div>
+            <div>
+              <div class="contact-detail-label">Adresse</div>
+              <div class="contact-detail-val">Konsumstrasse 2, 31228 Peine</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <form id="contact-form">
+          <div class="cf-group">
+            <label for="cf-name">Name *</label>
+            <input type="text" id="cf-name" required placeholder="Ihr vollständiger Name" />
+          </div>
+          <div class="cf-row">
+            <div class="cf-group">
+              <label for="cf-email">E-Mail *</label>
+              <input type="email" id="cf-email" required placeholder="ihre@email.de" />
+            </div>
+            <div class="cf-group">
+              <label for="cf-phone">Telefon</label>
+              <input type="tel" id="cf-phone" placeholder="+49 ..." />
+            </div>
+          </div>
+          <div class="cf-group">
+            <label for="cf-size">Anlagengröße *</label>
+            <select id="cf-size" required>
+              <option value="">Bitte wählen…</option>
+              <option>bis 10 kWp</option>
+              <option>10–30 kWp</option>
+              <option>30–100 kWp</option>
+              <option>über 100 kWp</option>
+            </select>
+          </div>
+          <div class="cf-group">
+            <label for="cf-msg">Nachricht</label>
+            <textarea id="cf-msg" rows="4" placeholder="Zusätzliche Informationen zu Ihrer Anlage…"></textarea>
+          </div>
+          <div class="cf-privacy">
+            <input type="checkbox" id="cf-privacy" required />
+            <label for="cf-privacy">Ich akzeptiere die <a href="index.html#datenschutz" style="color:var(--orange)">Datenschutzerklärung</a>.</label>
+          </div>
+          <div id="cf-error" class="cf-error">Bitte füllen Sie alle Pflichtfelder aus und akzeptieren Sie die Datenschutzerklärung.</div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+            Anfrage absenden
+            <svg class="icon" style="width:18px;height:18px" aria-hidden="true"><use href="#icon-send"></use></svg>
+          </button>
+        </form>
+        <div id="cf-success" class="cf-success">
+          <svg class="icon" style="width:48px;height:48px;color:#22c55e;stroke-width:1.5" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+          <h3>Anfrage erhalten!</h3>
+          <p>Vielen Dank – wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:12px;display:inline-flex">
+          <span class="logo-icon">
+            <svg class="icon" aria-hidden="true"><use href="#icon-lightning"></use></svg>
+          </span>
+          <span class="logo-text">HEISENBERG<span class="logo-sub">Energiesysteme</span></span>
+        </a>
+        <p style="font-size:14px;color:rgba(255,255,255,0.5);max-width:280px;line-height:1.6">Ihr Spezialist für Photovoltaik, Wärmepumpen und Batteriespeicher in Niedersachsen.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Startseite</a>
+        <a href="index.html#leistungen">Leistungen</a>
+        <a href="index.html#kontakt">Kontakt</a>
+        <a href="auftragsabfrage.html">Auftragsabfrage</a>
+      </div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.4);text-align:right">
+        <p>© 2025 Heisenberg Energiesysteme</p>
+        <p style="margin-top:4px">Konsumstrasse 2, 31228 Peine</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* FAQ */
+  .faq-section {
+    padding: 96px 0;
+    background: #fff;
+  }
+  .faq-list {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    border: 1.5px solid var(--gray-mid);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item[open] {
+    border-color: var(--orange);
+  }
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--navy);
+    cursor: pointer;
+    list-style: none;
+    gap: 12px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: var(--orange); }
+  .faq-arrow { flex-shrink: 0; transition: transform 0.25s; }
+  .faq-item[open] .faq-arrow { transform: rotate(180deg); }
+  .faq-item p {
+    padding: 0 22px 20px;
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    padding: 96px 0;
+    background: var(--gray-light);
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+    padding: 14px 18px;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--gray-mid);
+    transition: border-color 0.2s;
+  }
+  .contact-detail-item:hover { border-color: var(--orange); }
+  .contact-detail-icon {
+    width: 42px; height: 42px;
+    background: var(--orange-light);
+    color: var(--orange);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-detail-label {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 500;
+  }
+  .contact-detail-val {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* FORM CARD */
+  .contact-form-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    box-shadow: var(--shadow);
+  }
+  .cf-group {
+    margin-bottom: 16px;
+  }
+  .cf-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .cf-group input,
+  .cf-group select,
+  .cf-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--navy);
+    background: #fff;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .cf-group input:focus,
+  .cf-group select:focus,
+  .cf-group textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  .cf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .cf-privacy {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--gray);
+  }
+  .cf-privacy input { width: auto; margin-top: 2px; }
+  .cf-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .cf-error.visible { display: block; }
+  .cf-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 20px;
+    gap: 12px;
+  }
+  .cf-success.visible { display: flex; }
+  .cf-success h3 { font-size: 20px; font-weight: 700; color: var(--navy); }
+  .cf-success p { font-size: 15px; color: var(--gray); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy);
+    padding: 48px 0;
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--orange); }
+
+  @media (max-width: 900px) {
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .contact-section { padding: 64px 0; }
+    .faq-section { padding: 64px 0; }
+  }
+  @media (max-width: 600px) {
+    .cf-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<script>
+  // Contact form
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const size = document.getElementById('cf-size').value;
+    const privacy = document.getElementById('cf-privacy').checked;
+    const err = document.getElementById('cf-error');
+
+    if (!name || !email || !size || !privacy) {
+      err.classList.add('visible');
+      return;
+    }
+    err.classList.remove('visible');
+
+    const btn = this.querySelector('[type="submit"]');
+    btn.textContent = 'Wird gesendet…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      this.style.display = 'none';
+      document.getElementById('cf-success').classList.add('visible');
+    }, 900);
+  });
+</script>
+
+<style>
+  .testimonials-section {
+    padding: 96px 0;
+    background: var(--gray-light);
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .testimonial-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .testimonial-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+  }
+  .quote-icon {
+    width: 28px; height: 28px;
+    color: var(--orange-mid);
+    margin-bottom: 12px;
+  }
+  .testimonial-card p {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .testimonial-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .testimonial-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+  }
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--gray);
+  }
+  .testimonials-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background: var(--navy);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .ts-item {
+    text-align: center;
+  }
+  .ts-num {
+    display: block;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--orange);
+    letter-spacing: -1px;
+  }
+  .ts-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+  }
+  .ts-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(255,255,255,0.15);
+  }
+  @media (max-width: 768px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .testimonials-section { padding: 64px 0; }
+    .testimonials-summary { flex-direction: column; gap: 20px; }
+    .ts-divider { width: 48px; height: 1px; }
+  }
+</style>
+
+<style>
+  .process-section {
+    padding: 96px 0;
+    background: #fff;
+  }
+  .process-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 48px;
+  }
+  .process-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+  }
+  .process-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--orange-mid);
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -2px;
+  }
+  .process-icon-box {
+    width: 64px; height: 64px;
+    background: var(--navy);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--orange);
+    margin: 0 auto 20px;
+  }
+  .process-item h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .process-item p {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.65;
+  }
+  .process-connector {
+    flex-shrink: 0;
+    width: 48px;
+    height: 2px;
+    background: var(--orange-mid);
+    margin-top: 88px;
+    position: relative;
+  }
+  .process-connector::after {
+    content: '';
+    position: absolute;
+    right: -6px; top: -5px;
+    border: 6px solid transparent;
+    border-left-color: var(--orange-mid);
+  }
+  .process-cta {
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    .process-grid {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .process-connector {
+      width: 2px;
+      height: 40px;
+      margin-top: 0;
+    }
+    .process-connector::after {
+      right: -5px; top: auto; bottom: -6px;
+      border: 6px solid transparent;
+      border-top-color: var(--orange-mid);
+      border-left-color: transparent;
+    }
+    .process-section { padding: 64px 0; }
+  }
+</style>
+
+<style>
+  /* SECTION BASE */
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-label {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--gray);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* BENEFITS */
+  .benefits-section {
+    padding: 96px 0;
+    background: var(--gray-light);
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .benefit-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .benefit-icon {
+    width: 60px; height: 60px;
+    background: var(--orange-light);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  .benefit-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .benefit-card p {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .benefit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .benefit-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  @media (max-width: 1024px) {
+    .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefits-section { padding: 64px 0; }
+  }
+</style>
+
+<script>
+  // Sticky header
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Hero form
+  document.getElementById('hero-form').addEventListener('submit', e => {
+    e.preventDefault();
+    window.location.href = '#kontakt';
+  });
+</script>
+</body>
+</html>
