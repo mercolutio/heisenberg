@@ -561,28 +561,28 @@
 
   // Pipeline-Phasen in logischer Reihenfolge
   const PIPELINE = [
-    { id: 'dok',         label: 'Wartend auf Dokumente',             sub: 'Unterlagen werden angefordert' },
-    { id: 'pruefung',    label: 'Datenprüfung',                      sub: 'Eingereichte Daten werden geprüft' },
-    { id: 'bearbeitung', label: 'Anmeldung in Bearbeitung',          sub: 'Antrag beim Netzbetreiber eingereicht' },
-    { id: 'nein',        label: 'Antrag noch nicht angenommen',      sub: 'Rückmeldung des EVU ausstehend', warn: true },
-    { id: 'netz',        label: 'Netzanmeldung erfolgreich',         sub: 'Netzanschluss genehmigt' },
-    { id: 'einspeise',   label: 'Einspeisezusage erhalten',          sub: 'Einspeisegenehmigung liegt vor' },
-    { id: 'bebauung',    label: 'Warten auf Bebauung',               sub: 'Bauliche Voraussetzungen ausstehend' },
-    { id: 'fertig',      label: 'Fertigmeldung eingereicht',         sub: 'Abschlussprotokoll beim EVU eingereicht' },
-    { id: 'done',        label: 'Abgeschlossen / Anlage in Betrieb', sub: 'Ihre PV-Anlage ist vollständig angemeldet' },
+    { id: 'aufnahme',    label: 'Antrag wird aufgenommen',    sub: 'Das Partnerunternehmen legt den Kunden im System an' },
+    { id: 'pruefung',    label: 'Datenprüfung',               sub: 'Alle eingereichten Daten werden geprüft' },
+    { id: 'bearbeitung', label: 'Anmeldung in Bearbeitung',   sub: 'Die Netzanmeldung wird aktiv bearbeitet' },
+    { id: 'netz',        label: 'Netzanmeldung erfolgt',      sub: 'Die Anmeldung wurde beim Netzbetreiber eingereicht' },
+    { id: 'dok',         label: 'Wartend auf Dokumente',      sub: 'Fehlende Unterlagen werden beim Kunden angefragt' },
+    { id: 'einspeise',   label: 'Einspeisezusage erhalten',   sub: 'Der Netzbetreiber hat die Einspeisezusage erteilt' },
+    { id: 'bebauung',    label: 'Warten auf Bebauung',        sub: 'Die Installation durch das beauftragte Unternehmen steht aus' },
+    { id: 'fertig',      label: 'Fertigmeldung eingereicht',  sub: 'Die Fertigmeldung ist beim Netzbetreiber in Prüfung' },
+    { id: 'done',        label: 'Vorgang abgeschlossen',      sub: 'Netzanmeldung vollständig abgeschlossen' },
   ];
 
   function matchPhase(status) {
     const s = (status || '').toLowerCase().trim();
-    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum')) return 'dok';
-    if (s.includes('datenprüfung') || s.includes('datenpruef'))           return 'pruefung';
-    if (s.includes('anmeldung in bearb'))                                  return 'bearbeitung';
-    if (s.includes('antrag noch nicht'))                                   return 'nein';
-    if (s.includes('netzanmeldung erf'))                                   return 'netz';
-    if (s.includes('einspeisezusage'))                                     return 'einspeise';
-    if (s.includes('warten auf bebauung'))                                 return 'bebauung';
-    if (s.includes('fertigmeldung'))                                       return 'fertig';
-    if (s.includes('abgeschlossen'))                                       return 'done';
+    if (s.includes('antrag wird aufgenommen') || s.includes('aufgenommen')) return 'aufnahme';
+    if (s.includes('datenprüfung') || s.includes('datenpruef'))             return 'pruefung';
+    if (s.includes('anmeldung in bearb'))                                    return 'bearbeitung';
+    if (s.includes('netzanmeldung erf'))                                     return 'netz';
+    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum'))   return 'dok';
+    if (s.includes('einspeisezusage'))                                        return 'einspeise';
+    if (s.includes('warten auf bebauung'))                                    return 'bebauung';
+    if (s.includes('fertigmeldung'))                                          return 'fertig';
+    if (s.includes('vorgang abgeschlossen') || s.includes('abgeschlossen'))   return 'done';
     return null;
   }
 
