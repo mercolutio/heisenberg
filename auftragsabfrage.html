@@ -25,10 +25,64 @@
       background: var(--gray-light);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      color: var(--navy);
+    }
+
+    /* ── Site Header ── */
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid var(--gray-mid);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .site-header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .site-nav { display: flex; align-items: center; gap: 8px; }
+    .site-nav a {
+      font-size: 14px; font-weight: 500; color: var(--gray);
+      padding: 6px 12px; border-radius: 8px; text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+    .site-nav a:hover { color: var(--navy); background: var(--gray-light); }
+    .site-nav .btn-nav {
+      background: var(--orange); color: #fff;
+      padding: 8px 16px; border-radius: 8px;
+      font-weight: 600;
+    }
+    .site-nav .btn-nav:hover { background: var(--orange-dark); }
+
+    /* ── Main content area ── */
+    .page-main {
+      flex: 1;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      color: var(--navy);
+      padding: 48px 24px;
+    }
+
+    /* ── Site Footer ── */
+    .site-footer {
+      background: var(--navy);
+      padding: 28px 24px;
+    }
+    .site-footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .site-footer p { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .site-footer-links { display: flex; gap: 20px; }
+    .site-footer-links a {
+      font-size: 13px; color: rgba(255,255,255,0.5);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .site-footer-links a:hover { color: var(--orange); }
+
+    @media (max-width: 500px) {
+      .site-nav a:not(.btn-nav) { display: none; }
+      .site-footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
 
     .widget {
@@ -347,13 +401,29 @@
 </head>
 <body>
 
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html">
+      <img src="heisenberg_logo.svg" alt="Heisenberg Energiesysteme" height="36" />
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#leistungen">Leistungen</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <a href="index.html#kontakt" class="btn-nav">Jetzt anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-main">
 <div class="widget">
 
   <!-- Header -->
   <div class="widget-header">
-    <div style="display:flex;flex-direction:column;gap:8px;width:100%">
-      <img src="heisenberg_logo.svg" alt="Heisenberg Energiesysteme" height="30" style="filter:brightness(0) invert(1)" />
-      <span style="font-size:13px;color:rgba(255,255,255,0.55);font-weight:500">Auftragsabfrage</span>
+    <div>
+      <strong style="display:block;font-size:16px;font-weight:700;color:#fff">Auftragsstatus abfragen</strong>
+      <span style="font-size:13px;color:rgba(255,255,255,0.55)">Heisenberg Energiesysteme</span>
     </div>
   </div>
 
@@ -551,6 +621,21 @@
     });
   });
 </script>
+</div><!-- /.widget -->
+</main>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p>&copy; 2025 Heisenberg Energiesysteme · Konsumstrasse 2, 31228 Peine</p>
+    <div class="site-footer-links">
+      <a href="index.html">Startseite</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
 <script src="cookie-banner.js"></script>
 </body>
 </html>
