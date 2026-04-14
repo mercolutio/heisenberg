@@ -526,6 +526,10 @@
             <span>Auftrag gefunden</span>
             <span id="result-name" style="font-weight:600;color:#fff;font-size:13px">–</span>
           </div>
+          <div id="result-auftraggeber-row" class="result-row" style="display:none">
+            <span class="result-row-label">Auftraggeber</span>
+            <span class="result-row-value" id="result-auftraggeber">–</span>
+          </div>
           <div id="result-pipeline" class="pipeline"></div>
         </div>
         <button class="btn btn-outline" id="btn-reset-found">Neue Abfrage starten</button>
@@ -689,6 +693,14 @@
 
       if (!fetchError && responseData && responseData.found) {
         document.getElementById('result-name').textContent = responseData.name || '–';
+        const auftraggeber = responseData.auftraggeber || responseData.Auftraggeber || '';
+        const agRow = document.getElementById('result-auftraggeber-row');
+        if (auftraggeber) {
+          document.getElementById('result-auftraggeber').textContent = auftraggeber;
+          agRow.style.display = 'flex';
+        } else {
+          agRow.style.display = 'none';
+        }
         renderPipeline(responseData.pvStatus);
         document.getElementById('result-found').style.display = 'flex';
       } else {
