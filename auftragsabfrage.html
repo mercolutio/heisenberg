@@ -693,7 +693,7 @@
 
       if (!fetchError && responseData && responseData.found) {
         document.getElementById('result-name').textContent = responseData.name || '–';
-        const auftraggeber = responseData.auftraggeber || responseData.Auftraggeber || '';
+        const auftraggeber = responseData.auftraggeberName || '';
         const agRow = document.getElementById('result-auftraggeber-row');
         if (auftraggeber) {
           document.getElementById('result-auftraggeber').textContent = auftraggeber;
