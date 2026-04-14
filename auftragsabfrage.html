@@ -90,7 +90,7 @@
       border-radius: 20px;
       box-shadow: var(--shadow);
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       overflow: hidden;
     }
 
@@ -394,55 +394,59 @@
     }
 
     /* Pipeline */
-    .pipeline { display: flex; flex-direction: column; gap: 0; }
+    .pipeline { display: flex; flex-direction: column; padding: 16px 16px 12px; }
     .pl-step {
-      display: flex; align-items: flex-start; gap: 14px;
+      display: flex; align-items: flex-start; gap: 12px;
       position: relative;
     }
     .pl-step:not(:last-child)::after {
       content: '';
       position: absolute;
-      left: 15px; top: 32px;
-      width: 2px; height: calc(100% - 4px);
+      left: 13px; top: 28px;
+      width: 2px; height: calc(100% + 0px);
       background: var(--gray-mid);
     }
     .pl-step.done::after  { background: var(--orange); }
-    .pl-step.active::after { background: linear-gradient(to bottom, var(--orange), var(--gray-mid)); }
+    .pl-step.active::after { background: linear-gradient(to bottom, var(--orange) 0%, var(--gray-mid) 100%); }
 
     .pl-icon {
       flex-shrink: 0;
-      width: 32px; height: 32px; border-radius: 50%;
+      width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
+      font-size: 11px; font-weight: 700;
       border: 2px solid var(--gray-mid);
-      background: #fff; color: var(--gray);
+      background: #fff; color: #94a3b8;
       position: relative; z-index: 1;
     }
     .pl-step.done  .pl-icon { background: var(--orange); border-color: var(--orange); color: #fff; }
     .pl-step.active .pl-icon {
       background: var(--navy); border-color: var(--navy); color: #fff;
-      box-shadow: 0 0 0 4px rgba(249,115,22,0.2);
+      box-shadow: 0 0 0 4px rgba(249,115,22,0.25);
     }
     .pl-step.warn .pl-icon { background: #f59e0b; border-color: #f59e0b; color: #fff; }
 
-    .pl-body { padding: 4px 0 20px; }
+    .pl-body { padding: 4px 0 10px; min-width: 0; }
+    .pl-step:last-child .pl-body { padding-bottom: 0; }
     .pl-label {
-      font-size: 14px; font-weight: 600; color: var(--gray);
+      font-size: 13px; font-weight: 500; color: #94a3b8;
       line-height: 1.3;
     }
-    .pl-step.done  .pl-label { color: var(--orange); }
-    .pl-step.active .pl-label { color: var(--navy); font-size: 15px; }
-    .pl-step.warn .pl-label { color: #b45309; }
+    .pl-step.done  .pl-label { color: var(--gray); font-weight: 500; }
+    .pl-step.active .pl-label { color: var(--navy); font-size: 14px; font-weight: 700; }
+    .pl-step.warn   .pl-label { color: #92400e; font-size: 14px; font-weight: 700; }
     .pl-sub {
-      font-size: 12px; color: var(--gray); margin-top: 2px; line-height: 1.4;
+      font-size: 12px; color: var(--gray); margin-top: 3px; line-height: 1.45;
+      display: none;
     }
-    .pl-step.active .pl-sub { color: var(--gray); }
+    .pl-step.active .pl-sub,
+    .pl-step.warn   .pl-sub { display: block; }
     .pl-badge-active {
-      display: inline-block; margin-top: 6px;
-      background: var(--navy); color: #fff;
-      font-size: 11px; font-weight: 700; padding: 2px 10px;
+      display: inline-flex; align-items: center; gap: 4px; margin-top: 5px;
+      background: var(--orange); color: #fff;
+      font-size: 10px; font-weight: 700; padding: 2px 8px;
       border-radius: 999px; letter-spacing: 0.3px;
     }
+    .pl-step.warn .pl-badge-active { background: #f59e0b; }
   </style>
 </head>
 <body>
@@ -520,9 +524,9 @@
         <div class="result-card" style="margin-bottom:0">
           <div class="result-card-header" style="display:flex;justify-content:space-between;align-items:center">
             <span>Auftrag gefunden</span>
-            <span id="result-name" style="font-weight:600;color:var(--navy);font-size:13px">–</span>
+            <span id="result-name" style="font-weight:600;color:#fff;font-size:13px">–</span>
           </div>
-          <div id="result-pipeline" class="pipeline" style="padding:8px 0 4px"></div>
+          <div id="result-pipeline" class="pipeline"></div>
         </div>
         <button class="btn btn-outline" id="btn-reset-found">Neue Abfrage starten</button>
       </div>
@@ -602,7 +606,7 @@
         : (i + 1);
 
       const activeBadge = state === 'active' || state === 'warn'
-        ? `<span class="pl-badge-active">● Aktueller Status</span>`
+        ? `<span class="pl-badge-active">Aktueller Status</span>`
         : '';
 
       return `
