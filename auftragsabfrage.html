@@ -393,18 +393,56 @@
       opacity: 0.8;
     }
 
-    /* Monday.com Status-Farben */
-    .s-keine          { background: #e8e8e8; color: #333; }
-    .s-antrag-nein    { background: #fde8ec; color: #c0003c; }
-    .s-datenpruefung  { background: #fde8f5; color: #b3008a; }
-    .s-anmeldung      { background: #e8f1ff; color: #1a5bd1; }
-    .s-netz-erf       { background: #e3f9e5; color: #00854d; }
-    .s-einspeise      { background: #d6f5e3; color: #037f4c; }
-    .s-warten-bebau   { background: #d6f0f5; color: #0077a8; }
-    .s-fertigmeldung  { background: #fff3d6; color: #b36a00; }
-    .s-abgeschlossen  { background: #d0f0e0; color: #006644; }
-    .s-warten-dok     { background: #d6eeff; color: #0059b3; }
-    .s-fallback       { background: #f1f5f9; color: #64748b; }
+    /* Pipeline */
+    .pipeline { display: flex; flex-direction: column; gap: 0; }
+    .pl-step {
+      display: flex; align-items: flex-start; gap: 14px;
+      position: relative;
+    }
+    .pl-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 15px; top: 32px;
+      width: 2px; height: calc(100% - 4px);
+      background: var(--gray-mid);
+    }
+    .pl-step.done::after  { background: var(--orange); }
+    .pl-step.active::after { background: linear-gradient(to bottom, var(--orange), var(--gray-mid)); }
+
+    .pl-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      border: 2px solid var(--gray-mid);
+      background: #fff; color: var(--gray);
+      position: relative; z-index: 1;
+    }
+    .pl-step.done  .pl-icon { background: var(--orange); border-color: var(--orange); color: #fff; }
+    .pl-step.active .pl-icon {
+      background: var(--navy); border-color: var(--navy); color: #fff;
+      box-shadow: 0 0 0 4px rgba(249,115,22,0.2);
+    }
+    .pl-step.warn .pl-icon { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+
+    .pl-body { padding: 4px 0 20px; }
+    .pl-label {
+      font-size: 14px; font-weight: 600; color: var(--gray);
+      line-height: 1.3;
+    }
+    .pl-step.done  .pl-label { color: var(--orange); }
+    .pl-step.active .pl-label { color: var(--navy); font-size: 15px; }
+    .pl-step.warn .pl-label { color: #b45309; }
+    .pl-sub {
+      font-size: 12px; color: var(--gray); margin-top: 2px; line-height: 1.4;
+    }
+    .pl-step.active .pl-sub { color: var(--gray); }
+    .pl-badge-active {
+      display: inline-block; margin-top: 6px;
+      background: var(--navy); color: #fff;
+      font-size: 11px; font-weight: 700; padding: 2px 10px;
+      border-radius: 999px; letter-spacing: 0.3px;
+    }
   </style>
 </head>
 <body>
@@ -479,25 +517,12 @@
 
       <!-- Gefunden -->
       <div class="result-found" id="result-found" style="display:none">
-        <div class="result-icon-wrap">
-          <div class="result-icon success">
-            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div class="result-card" style="margin-bottom:0">
+          <div class="result-card-header" style="display:flex;justify-content:space-between;align-items:center">
+            <span>Auftrag gefunden</span>
+            <span id="result-name" style="font-weight:600;color:var(--navy);font-size:13px">–</span>
           </div>
-        </div>
-        <div class="result-heading">
-          <h3>Auftrag gefunden</h3>
-          <p>Aktuelle Informationen zu Ihrem Auftrag</p>
-        </div>
-        <div class="result-card">
-          <div class="result-card-header">Auftragsdetails</div>
-          <div class="result-row">
-            <span class="result-row-label">Kundenname</span>
-            <span class="result-row-value" id="result-name">–</span>
-          </div>
-          <div class="result-row">
-            <span class="result-row-label">PV-Status</span>
-            <span class="result-row-value" id="result-status">–</span>
-          </div>
+          <div id="result-pipeline" class="pipeline" style="padding:8px 0 4px"></div>
         </div>
         <button class="btn btn-outline" id="btn-reset-found">Neue Abfrage starten</button>
       </div>
@@ -530,35 +555,66 @@
     document.getElementById('step-' + n).classList.add('active');
   }
 
-  function getStatusBadge(status) {
+  // Pipeline-Phasen in logischer Reihenfolge
+  const PIPELINE = [
+    { id: 'dok',         label: 'Wartend auf Dokumente',             sub: 'Unterlagen werden angefordert' },
+    { id: 'pruefung',    label: 'Datenprüfung',                      sub: 'Eingereichte Daten werden geprüft' },
+    { id: 'bearbeitung', label: 'Anmeldung in Bearbeitung',          sub: 'Antrag beim Netzbetreiber eingereicht' },
+    { id: 'nein',        label: 'Antrag noch nicht angenommen',      sub: 'Rückmeldung des EVU ausstehend', warn: true },
+    { id: 'netz',        label: 'Netzanmeldung erfolgreich',         sub: 'Netzanschluss genehmigt' },
+    { id: 'einspeise',   label: 'Einspeisezusage erhalten',          sub: 'Einspeisegenehmigung liegt vor' },
+    { id: 'bebauung',    label: 'Warten auf Bebauung',               sub: 'Bauliche Voraussetzungen ausstehend' },
+    { id: 'fertig',      label: 'Fertigmeldung eingereicht',         sub: 'Abschlussprotokoll beim EVU eingereicht' },
+    { id: 'done',        label: 'Abgeschlossen / Anlage in Betrieb', sub: 'Ihre PV-Anlage ist vollständig angemeldet' },
+  ];
+
+  function matchPhase(status) {
     const s = (status || '').toLowerCase().trim();
-    // Flexible Keyword-Matching für Monday.com Status-Labels
-    if (s.includes('keine beauftragung') || s === '')
-      return badge('s-keine', 'Keine Beauftragung');
-    if (s.includes('antrag noch nicht'))
-      return badge('s-antrag-nein', 'Antrag noch nicht angenommen');
-    if (s.includes('datenprüfung') || s.includes('datenpruefung'))
-      return badge('s-datenpruefung', 'Datenprüfung');
-    if (s.includes('anmeldung in bearb'))
-      return badge('s-anmeldung', 'Anmeldung in Bearbeitung');
-    if (s.includes('netzanmeldung erf'))
-      return badge('s-netz-erf', 'Netzanmeldung erfolgreich');
-    if (s.includes('einspeisezusage'))
-      return badge('s-einspeise', 'Einspeisezusage erhalten');
-    if (s.includes('warten auf bebauung'))
-      return badge('s-warten-bebau', 'Warten auf Bebauung');
-    if (s.includes('fertigmeldung'))
-      return badge('s-fertigmeldung', 'Fertigmeldung eingereicht');
-    if (s.includes('abgeschlossen'))
-      return badge('s-abgeschlossen', 'Abgeschlossen / Anlage in Betrieb');
-    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum'))
-      return badge('s-warten-dok', 'Wartend auf Dokumente');
-    // Fallback: Rohwert anzeigen
-    return badge('s-fallback', status || '–');
+    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum')) return 'dok';
+    if (s.includes('datenprüfung') || s.includes('datenpruef'))           return 'pruefung';
+    if (s.includes('anmeldung in bearb'))                                  return 'bearbeitung';
+    if (s.includes('antrag noch nicht'))                                   return 'nein';
+    if (s.includes('netzanmeldung erf'))                                   return 'netz';
+    if (s.includes('einspeisezusage'))                                     return 'einspeise';
+    if (s.includes('warten auf bebauung'))                                 return 'bebauung';
+    if (s.includes('fertigmeldung'))                                       return 'fertig';
+    if (s.includes('abgeschlossen'))                                       return 'done';
+    return null;
   }
 
-  function badge(cls, label) {
-    return `<span class="status-badge ${cls}">${label}</span>`;
+  function renderPipeline(status) {
+    const currentId  = matchPhase(status);
+    const currentIdx = PIPELINE.findIndex(p => p.id === currentId);
+    const container  = document.getElementById('result-pipeline');
+
+    container.innerHTML = PIPELINE.map((phase, i) => {
+      let state = '';
+      if (currentIdx === -1) {
+        state = '';
+      } else if (i < currentIdx) {
+        state = 'done';
+      } else if (i === currentIdx) {
+        state = phase.warn ? 'warn' : 'active';
+      }
+
+      const icon = state === 'done'
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+        : (i + 1);
+
+      const activeBadge = state === 'active' || state === 'warn'
+        ? `<span class="pl-badge-active">● Aktueller Status</span>`
+        : '';
+
+      return `
+        <div class="pl-step ${state}">
+          <div class="pl-icon">${icon}</div>
+          <div class="pl-body">
+            <div class="pl-label">${phase.label}</div>
+            <div class="pl-sub">${phase.sub}</div>
+            ${activeBadge}
+          </div>
+        </div>`;
+    }).join('');
   }
 
   function animateProgress(cb) {
@@ -628,8 +684,8 @@
       document.getElementById('result-not-found').style.display = 'none';
 
       if (!fetchError && responseData && responseData.found) {
-        document.getElementById('result-name').textContent   = responseData.name   || '–';
-        document.getElementById('result-status').innerHTML   = getStatusBadge(responseData.pvStatus);
+        document.getElementById('result-name').textContent = responseData.name || '–';
+        renderPipeline(responseData.pvStatus);
         document.getElementById('result-found').style.display = 'flex';
       } else {
         document.getElementById('result-not-found').style.display = 'flex';
