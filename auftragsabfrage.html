@@ -393,10 +393,18 @@
       opacity: 0.8;
     }
 
-    .status-in-progress   { background: #fff7ed; color: var(--orange); }
-    .status-completed     { background: #f0fdf4; color: #16a34a; }
-    .status-planned       { background: #eff6ff; color: #2563eb; }
-    .status-pending       { background: #f8fafc; color: var(--gray); }
+    /* Monday.com Status-Farben */
+    .s-keine          { background: #e8e8e8; color: #333; }
+    .s-antrag-nein    { background: #fde8ec; color: #c0003c; }
+    .s-datenpruefung  { background: #fde8f5; color: #b3008a; }
+    .s-anmeldung      { background: #e8f1ff; color: #1a5bd1; }
+    .s-netz-erf       { background: #e3f9e5; color: #00854d; }
+    .s-einspeise      { background: #d6f5e3; color: #037f4c; }
+    .s-warten-bebau   { background: #d6f0f5; color: #0077a8; }
+    .s-fertigmeldung  { background: #fff3d6; color: #b36a00; }
+    .s-abgeschlossen  { background: #d0f0e0; color: #006644; }
+    .s-warten-dok     { background: #d6eeff; color: #0059b3; }
+    .s-fallback       { background: #f1f5f9; color: #64748b; }
   </style>
 </head>
 <body>
@@ -523,14 +531,33 @@
   }
 
   function getStatusBadge(status) {
-    const map = {
-      'in_progress':  ['status-in-progress',  'In Bearbeitung'],
-      'completed':    ['status-completed',     'Abgeschlossen'],
-      'planned':      ['status-planned',       'Geplant'],
-      'pending':      ['status-pending',       'Ausstehend'],
-    };
-    const s = (status || '').toLowerCase().replace(/\s+/g, '_');
-    const [cls, label] = map[s] || ['status-pending', status || '–'];
+    const s = (status || '').toLowerCase().trim();
+    // Flexible Keyword-Matching für Monday.com Status-Labels
+    if (s.includes('keine beauftragung') || s === '')
+      return badge('s-keine', 'Keine Beauftragung');
+    if (s.includes('antrag noch nicht'))
+      return badge('s-antrag-nein', 'Antrag noch nicht angenommen');
+    if (s.includes('datenprüfung') || s.includes('datenpruefung'))
+      return badge('s-datenpruefung', 'Datenprüfung');
+    if (s.includes('anmeldung in bearb'))
+      return badge('s-anmeldung', 'Anmeldung in Bearbeitung');
+    if (s.includes('netzanmeldung erf'))
+      return badge('s-netz-erf', 'Netzanmeldung erfolgreich');
+    if (s.includes('einspeisezusage'))
+      return badge('s-einspeise', 'Einspeisezusage erhalten');
+    if (s.includes('warten auf bebauung'))
+      return badge('s-warten-bebau', 'Warten auf Bebauung');
+    if (s.includes('fertigmeldung'))
+      return badge('s-fertigmeldung', 'Fertigmeldung eingereicht');
+    if (s.includes('abgeschlossen'))
+      return badge('s-abgeschlossen', 'Abgeschlossen / Anlage in Betrieb');
+    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum'))
+      return badge('s-warten-dok', 'Wartend auf Dokumente');
+    // Fallback: Rohwert anzeigen
+    return badge('s-fallback', status || '–');
+  }
+
+  function badge(cls, label) {
     return `<span class="status-badge ${cls}">${label}</span>`;
   }
 
