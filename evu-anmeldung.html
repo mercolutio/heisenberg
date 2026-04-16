@@ -363,6 +363,7 @@
         <img src="heisenberg_logo.svg" alt="Heisenberg Energiesysteme" height="38" />
       </a>
       <div class="header-cta">
+        <a href="#auftragsstatus" style="font-size:14px;font-weight:500;color:var(--gray);padding:6px 12px;border-radius:8px;transition:color 0.2s" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='var(--gray)'">Auftragsstatus</a>
         <a href="tel:+4951715059580" class="header-phone">
           <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
           05171 5059580
@@ -1050,6 +1051,264 @@
     </div>
   </div>
 </section>
+
+<!-- AUFTRAGSSTATUS -->
+<section style="background:var(--gray-light);padding:80px 0;border-top:1px solid var(--gray-mid)" id="auftragsstatus">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:48px">
+      <div class="section-label">Auftragsstatus</div>
+      <h2 class="section-title">Wo steht Ihr Auftrag?</h2>
+      <p class="section-subtitle">Geben Sie Ihre Auftragsnummer und PLZ ein – wir zeigen Ihnen den aktuellen Bearbeitungsstand.</p>
+    </div>
+    <div style="display:flex;justify-content:center">
+
+      <!-- Widget -->
+      <div style="background:#fff;border-radius:20px;box-shadow:var(--shadow-lg);width:100%;max-width:480px;overflow:hidden">
+
+        <div style="background:var(--navy);padding:24px 28px;display:flex;align-items:center;gap:12px">
+          <div style="background:var(--orange);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <strong style="display:block;font-size:15px;font-weight:700;color:#fff">Auftragsstatus abfragen</strong>
+            <span style="font-size:13px;color:rgba(255,255,255,0.55)">Heisenberg Energiesysteme</span>
+          </div>
+        </div>
+
+        <div style="padding:28px 28px 24px">
+
+          <!-- Step 1 -->
+          <div id="tr-step-1" class="tr-step tr-active">
+            <p style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:6px">Auftrag nachverfolgen</p>
+            <p style="font-size:14px;color:var(--gray);margin-bottom:22px;line-height:1.5">Geben Sie Ihre Auftragsnummer und Postleitzahl ein.</p>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+              <label style="font-size:13px;font-weight:600;color:var(--navy)">Auftragsnummer</label>
+              <input id="tr-auftragsnummer" type="text" placeholder="z. B. HE-2025-00142" autocomplete="off"
+                style="font-family:inherit;font-size:15px;color:var(--navy);background:var(--gray-light);border:1.5px solid var(--gray-mid);border-radius:10px;padding:12px 16px;outline:none;width:100%;transition:border-color 0.2s,box-shadow 0.2s"
+                onfocus="this.style.borderColor='var(--orange)';this.style.boxShadow='0 0 0 3px rgba(249,115,22,0.12)';this.style.background='#fff'"
+                onblur="this.style.borderColor='var(--gray-mid)';this.style.boxShadow='';this.style.background='var(--gray-light)'" />
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+              <label style="font-size:13px;font-weight:600;color:var(--navy)">Postleitzahl</label>
+              <input id="tr-plz" type="text" placeholder="z. B. 31228" maxlength="5" autocomplete="off"
+                style="font-family:inherit;font-size:15px;color:var(--navy);background:var(--gray-light);border:1.5px solid var(--gray-mid);border-radius:10px;padding:12px 16px;outline:none;width:100%;transition:border-color 0.2s,box-shadow 0.2s"
+                onfocus="this.style.borderColor='var(--orange)';this.style.boxShadow='0 0 0 3px rgba(249,115,22,0.12)';this.style.background='#fff'"
+                onblur="this.style.borderColor='var(--gray-mid)';this.style.boxShadow='';this.style.background='var(--gray-light)'" />
+            </div>
+            <div id="tr-error" style="display:none;font-size:12px;color:#dc2626;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:9px 13px;margin-bottom:14px">Bitte Auftragsnummer und PLZ eingeben.</div>
+            <button id="tr-btn-submit" onclick="trSubmit()"
+              style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 20px;font-family:inherit;font-size:15px;font-weight:700;background:var(--orange);color:#fff;border:none;border-radius:12px;cursor:pointer;transition:background 0.2s">
+              Status abrufen
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="tr-step-2" class="tr-step" style="display:none">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:12px 0">
+              <div style="width:52px;height:52px;border:4px solid #fed7aa;border-top-color:var(--orange);border-radius:50%;animation:spin 0.75s linear infinite"></div>
+              <p id="tr-loading-label" style="font-size:15px;font-weight:600;color:var(--navy)">Auftrag wird gesucht…</p>
+              <div style="width:100%">
+                <div style="height:6px;background:var(--gray-mid);border-radius:999px;overflow:hidden">
+                  <div id="tr-progress-fill" style="height:100%;background:var(--orange);border-radius:999px;width:0%;transition:width 0.3s ease"></div>
+                </div>
+                <p id="tr-progress-pct" style="font-size:12px;color:var(--gray);text-align:right;margin-top:4px">0%</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div id="tr-step-3" class="tr-step" style="display:none">
+
+            <!-- Gefunden -->
+            <div id="tr-found" style="display:none;flex-direction:column;gap:16px">
+              <div style="background:var(--gray-light);border:1px solid var(--gray-mid);border-radius:12px;overflow:hidden">
+                <div style="padding:10px 16px;background:var(--navy);display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55)">Auftrag gefunden</span>
+                  <span id="tr-result-name" style="font-size:13px;font-weight:600;color:#fff">–</span>
+                </div>
+                <div id="tr-auftraggeber-row" style="display:none;padding:12px 16px;border-bottom:1px solid var(--gray-mid);justify-content:space-between;align-items:center">
+                  <span style="font-size:13px;color:var(--gray);font-weight:500">Auftraggeber</span>
+                  <span id="tr-auftraggeber" style="font-size:14px;font-weight:700;color:var(--navy)">–</span>
+                </div>
+                <div id="tr-pipeline" style="display:flex;flex-direction:column;padding:16px 16px 12px"></div>
+              </div>
+              <button onclick="trReset()"
+                style="width:100%;padding:13px 20px;font-family:inherit;font-size:14px;font-weight:600;background:transparent;color:var(--navy);border:1.5px solid var(--gray-mid);border-radius:12px;cursor:pointer;transition:border-color 0.2s,color 0.2s"
+                onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'"
+                onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--navy)'">
+                Neue Abfrage starten
+              </button>
+            </div>
+
+            <!-- Nicht gefunden -->
+            <div id="tr-not-found" style="display:none;flex-direction:column;gap:16px;align-items:center;text-align:center">
+              <div style="width:64px;height:64px;background:#fef2f2;border-radius:50%;display:flex;align-items:center;justify-content:center">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              </div>
+              <div>
+                <h3 style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:6px">Auftrag nicht gefunden</h3>
+                <p style="font-size:14px;color:var(--gray)">Die Kombination aus Auftragsnummer und PLZ konnte keinem Auftrag zugeordnet werden.</p>
+              </div>
+              <button onclick="trReset()"
+                style="width:100%;padding:14px 20px;font-family:inherit;font-size:15px;font-weight:700;background:var(--orange);color:#fff;border:none;border-radius:12px;cursor:pointer">
+                Erneut versuchen
+              </button>
+              <a href="mailto:info@heisenberg-energiesysteme.de" style="font-size:13px;color:var(--orange);font-weight:600">info@heisenberg-energiesysteme.de</a>
+            </div>
+
+          </div>
+
+        </div>
+      </div><!-- /widget -->
+    </div>
+  </div>
+</section>
+
+<style>
+  .tr-step { animation: trFadeIn 0.25s ease; }
+  @keyframes trFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .tr-pl-step { display:flex; align-items:flex-start; gap:12px; position:relative; }
+  .tr-pl-step:not(:last-child)::after { content:''; position:absolute; left:13px; top:28px; width:2px; height:calc(100% + 0px); background:var(--gray-mid); }
+  .tr-pl-step.done::after  { background:var(--orange); }
+  .tr-pl-step.active::after { background:linear-gradient(to bottom,var(--orange) 0%,var(--gray-mid) 100%); }
+  .tr-pl-icon { flex-shrink:0; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; border:2px solid var(--gray-mid); background:#fff; color:#94a3b8; position:relative; z-index:1; }
+  .tr-pl-step.done   .tr-pl-icon { background:var(--orange); border-color:var(--orange); color:#fff; }
+  .tr-pl-step.active .tr-pl-icon { background:var(--navy); border-color:var(--navy); color:#fff; box-shadow:0 0 0 4px rgba(249,115,22,0.25); }
+  .tr-pl-step.warn   .tr-pl-icon { background:#f59e0b; border-color:#f59e0b; color:#fff; }
+  .tr-pl-body { padding:4px 0 18px; min-width:0; }
+  .tr-pl-step:last-child .tr-pl-body { padding-bottom:0; }
+  .tr-pl-label { font-size:13px; font-weight:500; color:#94a3b8; line-height:1.3; }
+  .tr-pl-step.done   .tr-pl-label { color:var(--gray); }
+  .tr-pl-step.active .tr-pl-label { color:var(--navy); font-size:14px; font-weight:700; }
+  .tr-pl-step.warn   .tr-pl-label { color:#92400e; font-size:14px; font-weight:700; }
+  .tr-pl-sub { font-size:12px; color:var(--gray); margin-top:3px; line-height:1.45; display:none; }
+  .tr-pl-step.active .tr-pl-sub, .tr-pl-step.warn .tr-pl-sub { display:block; }
+  .tr-pl-badge { display:inline-flex; align-items:center; gap:4px; margin-top:5px; background:var(--orange); color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; }
+  .tr-pl-step.warn .tr-pl-badge { background:#f59e0b; }
+</style>
+
+<script>
+(function() {
+  const WEBHOOK = 'https://n8n.mercolutio.eu/webhook/widget-vorgang';
+  const PIPELINE = [
+    { id:'aufnahme',    label:'Antrag wird aufgenommen',    sub:'Das Partnerunternehmen legt den Kunden im System an' },
+    { id:'pruefung',    label:'Datenprüfung',               sub:'Alle eingereichten Daten werden geprüft' },
+    { id:'bearbeitung', label:'Anmeldung in Bearbeitung',   sub:'Die Netzanmeldung wird aktiv bearbeitet' },
+    { id:'netz',        label:'Netzanmeldung erfolgt',      sub:'Die Anmeldung wurde beim Netzbetreiber eingereicht' },
+    { id:'dok',         label:'Wartend auf Dokumente',      sub:'Fehlende Unterlagen werden beim Kunden angefragt' },
+    { id:'einspeise',   label:'Einspeisezusage erhalten',   sub:'Der Netzbetreiber hat die Einspeisezusage erteilt' },
+    { id:'bebauung',    label:'Warten auf Bebauung',        sub:'Die Installation durch das beauftragte Unternehmen steht aus' },
+    { id:'fertig',      label:'Fertigmeldung eingereicht',  sub:'Die Fertigmeldung ist beim Netzbetreiber in Prüfung' },
+    { id:'done',        label:'Vorgang abgeschlossen',      sub:'Netzanmeldung vollständig abgeschlossen' },
+  ];
+
+  function trShow(step) {
+    ['tr-step-1','tr-step-2','tr-step-3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = (id === 'tr-step-' + step) ? 'block' : 'none';
+    });
+  }
+
+  function trMatchPhase(status) {
+    const s = (status || '').toLowerCase().trim();
+    if (s.includes('antrag wird aufgenommen') || s.includes('aufgenommen')) return 'aufnahme';
+    if (s.includes('datenprüfung') || s.includes('datenpruef'))             return 'pruefung';
+    if (s.includes('anmeldung in bearb'))                                    return 'bearbeitung';
+    if (s.includes('netzanmeldung erf'))                                     return 'netz';
+    if (s.includes('wartend auf dokum') || s.includes('warten auf dokum'))   return 'dok';
+    if (s.includes('einspeisezusage'))                                        return 'einspeise';
+    if (s.includes('warten auf bebauung'))                                    return 'bebauung';
+    if (s.includes('fertigmeldung'))                                          return 'fertig';
+    if (s.includes('vorgang abgeschlossen') || s.includes('abgeschlossen'))   return 'done';
+    return null;
+  }
+
+  function trRenderPipeline(status) {
+    const currentId  = trMatchPhase(status);
+    const currentIdx = PIPELINE.findIndex(p => p.id === currentId);
+    const container  = document.getElementById('tr-pipeline');
+    container.innerHTML = PIPELINE.map((phase, i) => {
+      let state = '';
+      if (currentIdx !== -1) {
+        if (i < currentIdx) state = 'done';
+        else if (i === currentIdx) state = phase.warn ? 'warn' : 'active';
+      }
+      const icon = state === 'done'
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+        : (i + 1);
+      const badge = (state === 'active' || state === 'warn')
+        ? `<span class="tr-pl-badge">Aktueller Status</span>` : '';
+      return `<div class="tr-pl-step ${state}"><div class="tr-pl-icon">${icon}</div><div class="tr-pl-body"><div class="tr-pl-label">${phase.label}</div><div class="tr-pl-sub">${phase.sub}</div>${badge}</div></div>`;
+    }).join('');
+  }
+
+  function trAnimateProgress(cb) {
+    const fill  = document.getElementById('tr-progress-fill');
+    const pct   = document.getElementById('tr-progress-pct');
+    const label = document.getElementById('tr-loading-label');
+    let val = 0;
+    const steps = [[0,'Auftrag wird gesucht…'],[40,'Daten werden geladen…'],[75,'Status wird ermittelt…'],[95,'Fast fertig…']];
+    const iv = setInterval(() => {
+      val = Math.min(val + Math.random() * 8 + 2, 95);
+      fill.style.width = val + '%';
+      pct.textContent = Math.round(val) + '%';
+      for (const [t, l] of steps) { if (val >= t) label.textContent = l; }
+      if (val >= 95) clearInterval(iv);
+    }, 180);
+    setTimeout(() => { clearInterval(iv); fill.style.width='100%'; pct.textContent='100%'; setTimeout(cb, 300); }, 2200);
+  }
+
+  window.trReset = function() {
+    document.getElementById('tr-auftragsnummer').value = '';
+    document.getElementById('tr-plz').value = '';
+    document.getElementById('tr-error').style.display = 'none';
+    document.getElementById('tr-progress-fill').style.width = '0%';
+    document.getElementById('tr-progress-pct').textContent = '0%';
+    trShow(1);
+  };
+
+  window.trSubmit = async function() {
+    const nr  = document.getElementById('tr-auftragsnummer').value.trim();
+    const plz = document.getElementById('tr-plz').value.trim();
+    const err = document.getElementById('tr-error');
+    if (!nr || !plz) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    trShow(2);
+
+    let responseData = null, fetchError = false;
+    const fetchPromise = fetch(WEBHOOK, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ auftragsnummer: nr, plz }),
+    }).then(r => r.json()).then(d => { responseData = d; }).catch(() => { fetchError = true; });
+
+    trAnimateProgress(async () => {
+      await fetchPromise;
+      document.getElementById('tr-found').style.display     = 'none';
+      document.getElementById('tr-not-found').style.display = 'none';
+      if (!fetchError && responseData && responseData.found) {
+        document.getElementById('tr-result-name').textContent = responseData.name || '–';
+        const ag = responseData.auftraggeberName || '';
+        const agRow = document.getElementById('tr-auftraggeber-row');
+        if (ag) { document.getElementById('tr-auftraggeber').textContent = ag; agRow.style.display = 'flex'; }
+        else { agRow.style.display = 'none'; }
+        trRenderPipeline(responseData.pvStatus);
+        document.getElementById('tr-found').style.display = 'flex';
+      } else {
+        document.getElementById('tr-not-found').style.display = 'flex';
+      }
+      trShow(3);
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    ['tr-auftragsnummer','tr-plz'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') trSubmit(); });
+    });
+  });
+})();
+</script>
 
 <!-- CONTACT -->
 <section class="contact-section" id="kontakt">
