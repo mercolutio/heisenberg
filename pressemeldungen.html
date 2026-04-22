@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pressemeldungen – Heisenberg Energiesysteme</title>
+  <meta name="description" content="Aktuelle Pressemeldungen von Heisenberg Energiesysteme aus Peine — Neuigkeiten rund um Photovoltaik, Wärmepumpen und Batteriespeicher." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --orange: #f97316;
+      --orange-dark: #ea580c;
+      --navy:   #1a2332;
+      --gray:   #64748b;
+      --gray-light: #f8fafc;
+      --gray-mid:   #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      --shadow-hover: 0 10px 28px rgba(15, 23, 42, 0.1);
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; color: var(--navy); background: #fff; -webkit-font-smoothing: antialiased; }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .header { background: var(--navy); padding: 0 24px; }
+    .header-inner { max-width: 1200px; margin: 0 auto; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .back-link { color: rgba(255,255,255,0.7); font-size: 14px; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .back-link:hover { color: #fff; text-decoration: none; }
+    .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Page hero */
+    .page-hero { background: var(--gray-light); border-bottom: 1px solid var(--gray-mid); padding: 64px 24px; }
+    .page-hero-inner { max-width: 1120px; margin: 0 auto; }
+    .page-label { display: inline-block; background: #fff; border: 1px solid var(--gray-mid); color: var(--gray); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .page-title { font-size: 40px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 12px; }
+    .page-title span { color: var(--orange); }
+    .page-subtitle { font-size: 17px; color: var(--gray); max-width: 640px; }
+
+    /* Press grid */
+    .press-section { max-width: 1120px; margin: 0 auto; padding: 64px 24px 96px; }
+    .press-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .press-card { background: #fff; border: 1px solid var(--gray-mid); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; box-shadow: var(--shadow); }
+    .press-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: #cbd5e1; }
+    .press-card a.press-card-link { color: inherit; display: flex; flex-direction: column; height: 100%; }
+    .press-card a.press-card-link:hover { text-decoration: none; }
+    .press-card-body { padding: 28px 26px 22px; display: flex; flex-direction: column; flex: 1; }
+    .press-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .press-tag { display: inline-block; background: rgba(249, 115, 22, 0.1); color: var(--orange-dark); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .press-tag.tag-blue { background: rgba(37, 99, 235, 0.1); color: #1d4ed8; }
+    .press-tag.tag-green { background: rgba(22, 163, 74, 0.1); color: #15803d; }
+    .press-date { font-size: 13px; color: var(--gray); font-weight: 500; }
+    .press-title { font-size: 20px; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 12px; letter-spacing: -0.2px; }
+    .press-teaser { font-size: 15px; color: var(--gray); line-height: 1.65; flex: 1; }
+    .press-card-footer { padding: 18px 26px; border-top: 1px solid var(--gray-mid); display: flex; justify-content: space-between; align-items: center; background: var(--gray-light); }
+    .read-more { color: var(--orange); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .press-card:hover .read-more { color: var(--orange-dark); }
+    .read-more svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+    .press-card:hover .read-more svg { transform: translateX(3px); }
+    .read-time { font-size: 12px; color: var(--gray); }
+
+    .empty-notice { padding: 48px 32px; text-align: center; background: var(--gray-light); border: 1px dashed var(--gray-mid); border-radius: var(--radius); color: var(--gray); }
+
+    /* Footer */
+    .footer { background: var(--navy); padding: 32px 24px; text-align: center; }
+    .footer p { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer a { color: rgba(255,255,255,0.6); margin: 0 10px; }
+    .footer a:hover { color: var(--orange); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .press-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    }
+    @media (max-width: 680px) {
+      .page-title { font-size: 30px; }
+      .page-hero { padding: 48px 20px; }
+      .press-section { padding: 48px 20px 72px; }
+      .press-grid { grid-template-columns: 1fr; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html">
+      <img src="heisenberg_logo.svg" alt="Heisenberg Energiesysteme" height="32" style="filter:brightness(0) invert(1)" />
+    </a>
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Zurück zur Startseite
+    </a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-label">Presse</span>
+    <h1 class="page-title">Aktuelle <span>Pressemeldungen</span></h1>
+    <p class="page-subtitle">Neuigkeiten, Meilensteine und Fachbeiträge von Heisenberg Energiesysteme aus der Region Peine.</p>
+  </div>
+</div>
+
+<section class="press-section">
+  <div class="press-grid">
+
+    <article class="press-card">
+      <a href="pressemeldung-600-kunden.html" class="press-card-link">
+        <div class="press-card-body">
+          <div class="press-meta">
+            <span class="press-tag tag-green">Meilenstein</span>
+            <span class="press-date">15. März 2026</span>
+          </div>
+          <h2 class="press-title">Heisenberg Energiesysteme erreicht 600 zufriedene Kunden in der Region Peine</h2>
+          <p class="press-teaser">Mit der Inbetriebnahme einer 14 kWp-Photovoltaikanlage in Wolfenbüttel begrüßen wir unseren 600. Kunden — ein Meilenstein nach sieben Jahren Engagement für die Energiewende im 50-km-Umkreis.</p>
+        </div>
+        <div class="press-card-footer">
+          <span class="read-more">
+            Weiterlesen
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+          <span class="read-time">3 Min. Lesezeit</span>
+        </div>
+      </a>
+    </article>
+
+    <article class="press-card">
+      <a href="pressemeldung-bafa-2026.html" class="press-card-link">
+        <div class="press-card-body">
+          <div class="press-meta">
+            <span class="press-tag tag-blue">Förderung</span>
+            <span class="press-date">10. Februar 2026</span>
+          </div>
+          <h2 class="press-title">BEG-Förderung 2026: Was Hausbesitzer jetzt wissen müssen</h2>
+          <p class="press-teaser">Die novellierte Bundesförderung für effiziente Gebäude bringt 2026 Änderungen bei Wärmepumpen und Batteriespeichern. Wir fassen zusammen, welche Zuschüsse weiter gelten und was sich für Eigentümer verbessert.</p>
+        </div>
+        <div class="press-card-footer">
+          <span class="read-more">
+            Weiterlesen
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+          <span class="read-time">5 Min. Lesezeit</span>
+        </div>
+      </a>
+    </article>
+
+    <article class="press-card">
+      <a href="pressemeldung-team-erweiterung.html" class="press-card-link">
+        <div class="press-card-body">
+          <div class="press-meta">
+            <span class="press-tag">Unternehmen</span>
+            <span class="press-date">20. Januar 2026</span>
+          </div>
+          <h2 class="press-title">Heisenberg erweitert Team um drei Installationsmeister</h2>
+          <p class="press-teaser">Um die steigende Nachfrage nach Wärmepumpen und Photovoltaik im Raum Peine, Braunschweig und Hannover bedienen zu können, verstärken drei neue Meister unser Montageteam.</p>
+        </div>
+        <div class="press-card-footer">
+          <span class="read-more">
+            Weiterlesen
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+          <span class="read-time">2 Min. Lesezeit</span>
+        </div>
+      </a>
+    </article>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>
+    &copy; 2025 Heisenberg Energiesysteme &nbsp;|&nbsp;
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="pressemeldungen.html">Presse</a>
+  </p>
+</footer>
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>
